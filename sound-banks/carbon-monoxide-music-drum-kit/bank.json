@@ -1,0 +1,45 @@
+{
+    "name": "Carbon Monoxide Drum Kit",
+    "voices": [
+        {
+            "name": "Kick",
+            "file": "audio/kick.mp3",
+            "midiKey": 36
+        },
+        {
+            "name": "Snare",
+            "file": "audio/snare.mp3",
+            "midiKey": 38
+        },
+        {
+            "name": "Closed Hi Hat",
+            "file": "audio/closed-hihat.mp3",
+            "midiKey": 42
+        },
+        {
+            "name": "High Floor Tom",
+            "file": "audio/floor-tom.mp3",
+            "midiKey": 43
+        },
+        {
+            "name": "Open Hi Hat",
+            "file": "audio/open-hihat.mp3",
+            "midiKey": 46
+        },
+        {
+            "name": "Crash",
+            "file": "audio/crash.mp3",
+            "midiKey": 49
+        },
+        {
+            "name": "Low-Mid Tom",
+            "file": "audio/mid-tom.mp3",
+            "midiKey": 50
+        },
+        {
+            "name": "Ride",
+            "file": "audio/ride.mp3",
+            "midiKey": 51
+        }
+    ]
+}

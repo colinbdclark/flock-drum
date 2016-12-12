@@ -1,0 +1,50 @@
+{
+    "name": "Carbon Monoxide Drum Kit",
+    "voices": [
+        {
+            "name": "Kick 1",
+            "file": "audio/fugwhump_akl_09_kick.mp3",
+            "midiKey": 35
+        },
+        {
+            "name": "Kick 2",
+            "file": "audio/fugwhump_akl_10_kick.mp3",
+            "midiKey": 36
+        },
+        {
+            "name": "Snare 1",
+            "file": "audio/fugwhump_akl_11_snare.mp3",
+            "midiKey": 38
+        },
+        {
+            "name": "Snare 2",
+            "file": "audio/fugwhump_akl_12_snare.mp3",
+            "midiKey": 40
+        },
+        {
+            "name": "Snare 3",
+            "file": "audio/fugwhump_akl_13_snare.mp3",
+            "midiKey": 41
+        },
+        {
+            "name": "Hi Hat",
+            "file": "audio/fugwhump_akl_14_hat.mp3",
+            "midiKey": 42
+        },
+        {
+            "name": "Percussion 1",
+            "file": "audio/fugwhump_akl_15_perc.mp3",
+            "midiKey": 43
+        },
+        {
+            "name": "Percussion 2",
+            "file": "audio/fugwhump_akl_16_perc.mp3",
+            "midiKey": 45
+        },
+        {
+            "name": "Percussion 3",
+            "file": "audio/fugwhump_akl_17_perc.mp3",
+            "midiKey": 47
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "extends": "eslint-config-fluid",
+
+    "globals": {
+        "flock": true,
+        "fluid": true
+    },
+
+    "rules": {
+        "strict": ["error", "global"]
+    }
+}
