@@ -62,11 +62,7 @@ fluid.defaults("flock.drum.lowPassFilter", {
         ugen: "flock.ugen.filter.biquad.rlp",
         rate: "audio",
 
-        cutoff: {
-            ugen: "flock.ugen.value",
-            rate: "control",
-            value: 10000
-        },
+        cutoff: 10000,
 
         q: 1.0
     }

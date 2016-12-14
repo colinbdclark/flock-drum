@@ -27,12 +27,6 @@ fluid.defaults("flock.drum.kit", {
         }
     },
 
-    components: {
-        mixer: {
-            type: "flock.drum.mixer"
-        }
-    },
-
     dynamicComponents: {
         voice: {
             sources: "{that}.options.voiceOptions",

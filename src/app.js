@@ -28,6 +28,10 @@ fluid.defaults("flock.drum.app", {
             }
         },
 
+        mixer: {
+            type: "flock.drum.mixer"
+        },
+
         bankManager: {
             type: "flock.drum.bankManager"
         }
@@ -42,7 +46,7 @@ fluid.defaults("flock.drum.app", {
         "onCreate.startPlaying": [
             "{enviro}.start()",
             "{kit}.play()",
-            "{kit}.mixer.play()" // TODO: Upstream -Bands should distribute to child bands.
+            "{mixer}.play()"
         ]
     }
 });

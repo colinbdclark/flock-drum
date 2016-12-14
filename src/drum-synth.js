@@ -7,15 +7,17 @@ fluid.defaults("flock.drum.synth", {
     bufferId: "0",
 
     components: {
-        // TODO: Add a stereo panner here.
         output: {
             type: "flock.drum.out",
             options: {
                 ugenDef: {
                     bus: "{synth}.options.bus",
-                    sources: [
-                        "{reverb}.options.ugenDef"
-                    ]
+                    sources: {
+                        id: "panner",
+                        ugen: "flock.ugen.pan2",
+                        pan: 0,
+                        source: "{reverb}.options.ugenDef"
+                    }
                 }
             }
         },

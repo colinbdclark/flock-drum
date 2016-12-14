@@ -11,5 +11,5 @@ Way, way too soon to use.
 Flock Drum is copyright 2016 by Colin Clark. It is distributed under the MIT License.
 
 Creative Commons and public domain samples provided by:
- * Fugwhump
- * Carbon Monoxide Music
+ * [Fugwhump](http://ccmixter.org/files/fugwhump/17527)
+ * [Carbon Monoxide Music](http://ccmixter.org/files/carbonmonoxidemusic/23425)
