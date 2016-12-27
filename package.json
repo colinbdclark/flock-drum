@@ -11,6 +11,6 @@
         "grunt-jsonlint": "1.0.4"
     },
     "dependencies": {
-        "flocking": "colinbdclark/flocking#flock-drum"
+        "flocking": "colinbdclark/flocking#unit-testing-improvements"
     }
 }

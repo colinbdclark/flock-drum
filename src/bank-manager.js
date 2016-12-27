@@ -3,9 +3,32 @@
 fluid.defaults("flock.drum.bankManager", {
     gradeNames: "fluid.modelComponent",
 
+    bankPathRootTemplate: "sound-banks/%activeBankID/",
+
     model: {
+        activeBankID: "{that}.bankList.options.banks.0",
+        activeBankPathRoot: "",
         activeBank: {}
     },
+
+    modelRelay: [
+        {
+            target: "activeBank",
+            singleTransform: {
+                type: "fluid.transforms.free",
+                func: "flock.drum.bankManager.loadBank",
+                args: ["{that}.model", "{that}.events"]
+            }
+        },
+        {
+            target: "activeBankPathRoot",
+            singleTransform: {
+                type: "fluid.transforms.stringTemplate",
+                template: "{that}.options.bankPathRootTemplate",
+                terms: "{that}.model"
+            }
+        }
+    ],
 
     modelListeners: {
         activeBank: {
@@ -27,7 +50,7 @@ fluid.defaults("flock.drum.bankManager", {
                 bufferDefs: {
                     expander: {
                         funcName: "flock.drum.bankManager.makeBufferDefs",
-                        args: ["{bankManager}.model.activeBank"]
+                        args: ["{bankManager}.model"]
                     }
                 },
 
@@ -39,7 +62,10 @@ fluid.defaults("flock.drum.bankManager", {
     },
 
     invokers: {
-        loadBank: "flock.drum.bankManager.loadBank({arguments}.0, {that})"
+        loadBank: {
+            changePath: "activeBankID",
+            value: "{arguments}.0"
+        }
     },
 
     events: {
@@ -65,46 +91,55 @@ fluid.defaults("flock.drum.bankManager", {
         "onBankLoadError.logError": {
             "this": "console",
             method: "log",
-            args: ["{arguments}.0"]
+            args: [
+                "An error occurred while loading the",
+                "{that}.model.activeBankID",
+                "sound bank from path",
+                "{that}.model.activeBankPathRoot",
+                "Error was:",
+                "{arguments}.0",
+                "\n",
+                "activeBank model is:",
+                "{that}.model.activeBank"
+            ]
         }
     }
 });
 
-flock.drum.bankManager.pathForBankName = function (bankName) {
-    return "sound-banks/" + bankName + "/bank.json";
-};
-
 // TODO: Replace this with something suitable for use both in Electron and a browser.
-flock.drum.bankManager.loadBank = function (bankName, that) {
-    var path = flock.drum.bankManager.pathForBankName(bankName);
+flock.drum.bankManager.loadBank = function (model, events) {
+    if (!model || !model.activeBankPathRoot) {
+        return;
+    }
+
+    var path = model.activeBankPathRoot + "bank.json";
 
     $.ajax({
         url: path,
         method: "GET",
         dataType: "json",
-        success: that.events.afterBankMetadataLoaded.fire,
+        success: events.afterBankMetadataLoaded.fire,
         error: function (jqXHR, textStatus, errorThrown) {
-            that.events.onBankLoadError.fire(errorThrown);
+            events.onBankLoadError.fire(errorThrown);
         }
     });
 };
 
-flock.drum.bankManager.makeBufferDefs = function (bank) {
-    if (!bank) {
+flock.drum.bankManager.makeBufferDefs = function (model) {
+    if (!model.activeBank) {
         return [
             {
-                id: "FIX ME" // TODO: Look left!
+                id: "Flocking Errors out if you try to load a bufDef without an id or src property" // TODO: Look left!
             }
         ];
     }
 
-    return fluid.transform(bank.voices, function (voice, idx) {
+    return fluid.transform(model.activeBank.voices, function (voice, idx) {
         return {
             // TODO: This correspondence is too lose; it should at least be
             // factored out into a utility function.
             id: String(idx),
-            // TODO: Remove hard coding.
-            src: "sound-banks/carbon-monoxide-music-drum-kit/" + voice.file
+            src: model.activeBankPathRoot + voice.file
         };
     });
 };

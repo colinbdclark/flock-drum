@@ -1,0 +1,55 @@
+{
+    "name": "Sequential Circuits Drumtraks",
+    "voices": [
+        {
+            "name": "Cabasa",
+            "file": "audio/00.wav",
+            "midiKey": 69
+        },
+        {
+            "name": "Clap",
+            "file": "audio/01.wav",
+            "midiKey": 39
+        },
+        {
+            "name": "Closed Hi Hat",
+            "file": "audio/02.wav",
+            "midiKey": 42
+        },
+        {
+            "name": "Cowbell",
+            "file": "audio/03.wav",
+            "midiKey": 56
+        },
+        {
+            "name": "Crash",
+            "file": "audio/04.wav",
+            "midiKey": 49
+        },
+        {
+            "name": "Kick",
+            "file": "audio/05.wav",
+            "midiKey": 36
+        },
+        {
+            "name": "Snare",
+            "file": "audio/06.wav",
+            "midiKey": 38
+        },
+        {
+            "name": "Tambourine",
+            "file": "audio/07.wav",
+            "midiKey": 54
+        },
+        {
+            "name": "Tom 1",
+            "file": "audio/08.wav",
+            "midiKey": 41
+        },
+        {
+            "name": "Tom 2",
+            "file": "audio/09.wav",
+            "midiKey": 50
+        }
+    ]
+}

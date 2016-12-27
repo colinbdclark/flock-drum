@@ -6,6 +6,25 @@ fluid.defaults("flock.drum.synth", {
     bus: 0,
     bufferId: "0",
 
+    mergePolicy: {
+        "noteChanges.on": "nomerge",
+        "noteChanges.off": "nomerge"
+    },
+
+    noteChanges: {
+        on: {
+            "samplePlayer.trigger": 1.0,
+            "ampEnvelope.gate": 1.0,
+            "pitchEnvelope.gate": 1.0
+        },
+
+        off: {
+            "samplePlayer.trigger": 0.0,
+            "ampEnvelope.gate": 0.0,
+            "pitchEnvelope.gate": 0.0
+        }
+    },
+
     components: {
         output: {
             type: "flock.drum.out",

@@ -5,6 +5,10 @@
         <title>Flock Drum</title>
 
         <script src="node_modules/flocking/dist/flocking-all.js"></script>
+
+        <script src="src/migrate-to-flocking/gate-button.js"></script>
+        <script src="src/migrate-to-flocking/note-gate-button.js"></script>
+
         <script src="src/ugen-defs.js"></script>
         <script src="src/effects-chain.js"></script>
         <script src="src/drum-synth.js"></script>
@@ -16,6 +20,10 @@
     </head>
 
     <body id="body">
+        <main>
+            <div id="note-trigger-panel"></div>
+        </main>
+
         <script type="text/javascript">
             window.drumApp = flock.drum.app();
         </script>

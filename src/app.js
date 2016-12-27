@@ -38,11 +38,6 @@ fluid.defaults("flock.drum.app", {
     },
 
     listeners: {
-        "onCreate.loadFirstBank": {
-            func: "{bankManager}.loadBank",
-            args: ["{bankManager}.bankList.options.banks.0"]
-        },
-
         "onCreate.startPlaying": [
             "{enviro}.start()",
             "{kit}.play()",

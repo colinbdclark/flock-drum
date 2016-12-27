@@ -2,7 +2,7 @@
 
 fluid.defaults("flock.drum.bankLoader", {
     gradeNames: "flock.bufferLoader",
-    
+
     bufferDefs: {
         expander: {
             funcName: "flock.drum.bankManager.makeBufferDefs",
@@ -13,4 +13,4 @@ fluid.defaults("flock.drum.bankLoader", {
     events: {
         afterBuffersLoaded: "{bankManager}.events.afterBankLoaded"
     }
-})
+});

@@ -37,9 +37,33 @@ fluid.defaults("flock.drum.kit", {
                 bufferId: "{source}.bufferId",
                 components: {
                     enviro: "{enviro}"
+                },
+                events: {
+                    onCreate: "{kit}.events.onVoiceCreated"
+                }
+            }
+        },
+
+        // TODO: This should be defined in a parent component
+        // representing the panel of trigger buttons.
+        triggerButton: {
+            createOnEvent: "onVoiceCreated",
+            type: "flock.ui.noteGateButton",
+            container: "#note-trigger-panel",
+            options: {
+                gateTimer: 0.5,
+
+                cat: "{arguments}.0", // TODO: Infusion will not allow me to refer to this
+                                      // at options.components.target
+                components: {
+                    target: "{that}.options.cat"
                 }
             }
         }
+    },
+
+    events: {
+        onVoiceCreated: null
     }
 });
 
