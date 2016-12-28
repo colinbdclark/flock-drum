@@ -16,7 +16,7 @@ var fluid = fluid || require("infusion"),
     var $ = fluid.registerNamespace("jQuery");
 
     fluid.defaults("flock.ui.gateButton", {
-        gradeNames: "fluid.viewComponent",
+        gradeNames: "flock.ui.selfRenderingView",
 
         // If the gateTimer is set to > 0.0, the button will automatically
         // fire a gate close event after the specified time.
@@ -43,13 +43,14 @@ var fluid = fluid || require("infusion"),
         },
 
         listeners: {
-            "onCreate.render": {
-                funcName: "flock.ui.gateButton.render",
-                args: ["{that}"]
-            },
-
+            // TODO: This isn't quite enough. In most cases,
+            // if we haven't reset/closed the trigger between clicks (e.g. fast clicking),
+            // nothing will happen. This means we need:
+            //   a) to keep track of whether we're currently open or not
+            //   b) if we're open, close the gate immediately and register
+            //      the re-opening for the next tick.
             "afterRendered.registerOpenHandler": {
-                "this": "{that}.dom.button",
+                "this": "{that}.dom.element",
                 method: "mousedown",
                 args: ["{that}.events.onOpen.fire"]
             },
@@ -60,7 +61,7 @@ var fluid = fluid || require("infusion"),
             },
 
             "onOpen.styleOn": {
-                "this": "{that}.dom.button",
+                "this": "{that}.dom.element",
                 method: "addClass",
                 args: ["{that}.options.styles.on"]
             },
@@ -76,14 +77,14 @@ var fluid = fluid || require("infusion"),
             },
 
             "onClose.styleOff": {
-                "this": "{that}.dom.button",
+                "this": "{that}.dom.element",
                 method: "removeClass",
                 args: ["{that}.options.styles.on"]
             }
         },
 
         markup: {
-            button: "<button class='flock-gateButton'>%label</button>"
+            element: "<button class='flock-gateButton'>%label</button>"
         },
 
         strings: {
@@ -93,27 +94,14 @@ var fluid = fluid || require("infusion"),
         styles: {
             active: "flock-gateButton-active",  // Clicked
             on: "flock-gateButton-on"           // On (gate timer may be running)
-        },
-
-        selectors: {
-            button: "button"
         }
     });
-
-    flock.ui.gateButton.render = function (that) {
-        var renderedMarkup = fluid.stringTemplate(that.options.markup.button,
-            that.options.strings);
-
-        var el = $(renderedMarkup);
-        that.container.append(el);
-        that.events.afterRendered.fire(el);
-    };
 
     flock.ui.gateButton.registerCloseHandler = function (that) {
         // We only fire close events if there's no gateTimer set and
         // the user wants explict close events to be fired.
         if (that.options.closeOnRelease && that.options.gateTimer <= 0.0) {
-            that.locate("button").mouseup(that.events.onClose.fire);
+            that.locate("element").mouseup(that.events.onClose.fire);
         }
     };
 
@@ -129,5 +117,4 @@ var fluid = fluid || require("infusion"),
             clearTimeout(oldTimerID);
         }
     };
-
 }());

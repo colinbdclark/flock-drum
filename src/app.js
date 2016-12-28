@@ -24,8 +24,20 @@ fluid.defaults("flock.drum.app", {
             options: {
                 components: {
                     enviro: "{app}.enviro"
+                },
+
+                events: {
+                    // Any other arrangement of event distribution will fail silently.
+                    // Presumably, observing the {controlPanel} here ensures it is created in
+                    // time for the voices to be instantiated.
+                    onVoiceCreated: "{controlPanel}.events.onVoiceCreated"
                 }
             }
+        },
+
+        controlPanel: {
+            type: "flock.drum.controlPanel",
+            container: "#note-trigger-panel"
         },
 
         mixer: {

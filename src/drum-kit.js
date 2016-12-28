@@ -3,7 +3,7 @@
 fluid.defaults("flock.drum.kit", {
     gradeNames: "flock.band",
 
-    numVoices: 16,
+    numVoices: 11,
 
     voiceBuses: {
         expander: {
@@ -38,25 +38,8 @@ fluid.defaults("flock.drum.kit", {
                 components: {
                     enviro: "{enviro}"
                 },
-                events: {
-                    onCreate: "{kit}.events.onVoiceCreated"
-                }
-            }
-        },
-
-        // TODO: This should be defined in a parent component
-        // representing the panel of trigger buttons.
-        triggerButton: {
-            createOnEvent: "onVoiceCreated",
-            type: "flock.ui.noteGateButton",
-            container: "#note-trigger-panel",
-            options: {
-                gateTimer: 0.5,
-
-                cat: "{arguments}.0", // TODO: Infusion will not allow me to refer to this
-                                      // at options.components.target
-                components: {
-                    target: "{that}.options.cat"
+                listeners: {
+                    onCreate: "{kit}.events.onVoiceCreated({that})"
                 }
             }
         }
@@ -83,6 +66,7 @@ flock.drum.kit.expandVoiceBuses = function (numVoices, enviro) {
 };
 
 flock.drum.kit.expandVoiceOptions = function (voiceBuses, voiceOptionsTemplate) {
+    // TODO: Hardcoded to the left channel only.
     return fluid.transform(voiceBuses.left, function (voiceBus, idx) {
         var optionsForVoice = fluid.copy(voiceOptionsTemplate);
         optionsForVoice.bus = voiceBus;
