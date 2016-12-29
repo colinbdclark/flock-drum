@@ -46,6 +46,19 @@ fluid.defaults("flock.drum.app", {
 
         bankManager: {
             type: "flock.drum.bankManager"
+        },
+
+        controller: {
+            type: "flock.drum.controller",
+            options: {
+                modelListeners: {
+                    "notes.*": {
+                        "this": "console",
+                        method: "log",
+                        args: ["{change}.path", "{change}.value"]
+                    }
+                }
+            }
         }
     },
 

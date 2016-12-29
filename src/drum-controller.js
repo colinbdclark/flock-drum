@@ -1,21 +1,18 @@
 "use strict";
 
 fluid.defaults("flock.drum.controller", {
-    gradeNames: "flock.midi.controller",
+    gradeNames: "flock.midi.device",
 
-    ports: "*",
-
-    components: {
-        synthContext: "{kit}",
-
-        connection: {
-            options: {
-                ports: {
-                    input: "{controller}.options.ports"
-                }
-            }
+    notes: {
+        expander: {
+            funcName: "flock.generateSequence",
+            args: [{
+                start: 36,
+                numValues: 16,
+                step: 1
+            }]
         }
     },
 
-    noteMap: {}
+    controls: []
 });
