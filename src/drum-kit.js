@@ -3,7 +3,7 @@
 fluid.defaults("flock.drum.kit", {
     gradeNames: "flock.band",
 
-    numVoices: 6,
+    numVoices: 16,
 
     voiceBuses: {
         expander: {

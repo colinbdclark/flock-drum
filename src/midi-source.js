@@ -3,6 +3,8 @@
 fluid.defaults("flock.drum.midiSource", {
     gradeNames: "fluid.modelComponent",
 
+    numVoices: 16,
+
     // TODO: Somehow these midi note numbers
     // need to get mapped into model listeners on {controller}
     // which will fire the appropriate voice's noteOn/noteOff events.
@@ -12,7 +14,7 @@ fluid.defaults("flock.drum.midiSource", {
                 funcName: "flock.generateSequence",
                 args: [{
                     start: 36,
-                    numValues: 16
+                    numValues: "{that}.options.numVoices"
                 }]
             }
         }
@@ -22,6 +24,8 @@ fluid.defaults("flock.drum.midiSource", {
         controller: {
             type: "flock.drum.controller",
             options: {
+                numVoices: "{midiSource}.options.numVoices",
+
                 modelListeners: {
                     "notes.*": {
                         "this": "console",

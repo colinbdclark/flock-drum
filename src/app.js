@@ -3,6 +3,10 @@
 fluid.defaults("flock.drum.app", {
     gradeNames: "fluid.component",
 
+    numChannels: 2,
+    numInputBuses: 1,
+    numVoices: 6,
+
     components: {
         enviro: {
             type: "flock.enviro",
@@ -11,7 +15,9 @@ fluid.defaults("flock.drum.app", {
                     audioSystem: {
                         options: {
                             model: {
-                                numBuses: 36
+                                chans: "{app}.options.numChannels",
+                                numInputBuses:  "{app}.options.numInputBuses",
+                                numBuses: "@expand:flock.drum.app.calcNumBuses({app}.options)"
                             }
                         }
                     }
@@ -22,6 +28,8 @@ fluid.defaults("flock.drum.app", {
         kit: {
             type: "flock.drum.kit",
             options: {
+                numVoices: "{app}.options.numVoices",
+
                 components: {
                     enviro: "{app}.enviro"
                 },
@@ -49,7 +57,10 @@ fluid.defaults("flock.drum.app", {
         },
 
         midiSource: {
-            type: "flock.drum.midiSource"
+            type: "flock.drum.midiSource",
+            options: {
+                numVoices: "{app}.options.numVoices"
+            }
         }
     },
 
@@ -61,3 +72,7 @@ fluid.defaults("flock.drum.app", {
         ]
     }
 });
+
+flock.drum.app.calcNumBuses = function (o) {
+    return o.numChannels + o.numInputBuses + (o.numVoices * o.numChannels);
+};
