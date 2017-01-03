@@ -6,29 +6,11 @@ fluid.defaults("flock.drum.out", {
     ugenDef: {
         id: "voiceOutput",
         ugen: "flock.ugen.out",
+        rate: "audio",
         bus: 0,
         expand: 2
     }
 });
-
-
-fluid.defaults("flock.drum.gain", {
-    gradeNames: "fluid.component",
-
-    ugenDef: {
-        id: "gain",
-        ugen: "flock.ugen.passThrough",
-        rate: "audio",
-
-        mul: {
-            id: "amp",
-            ugen: "flock.ugen.value",
-            rate: "control",
-            value: 1.0
-        }
-    }
-});
-
 
 fluid.defaults("flock.drum.reverb", {
     gradeNames: "fluid.component",
@@ -59,12 +41,10 @@ fluid.defaults("flock.drum.lowPassFilter", {
 
     ugenDef: {
         id: "lowPassFilter",
-        ugen: "flock.ugen.filter.biquad.rlp",
+        ugen: "flock.ugen.filter.moog",
         rate: "audio",
-
-        cutoff: 88200,
-
-        q: 1.0
+        cutoff: 44100,
+        resonance: 0
     }
 });
 
@@ -92,17 +72,21 @@ fluid.defaults("flock.drum.samplePlayer", {
             sustain: 1.0,
             release: 0,
             gate: 0
-        },
-
-        mul: {
-            id: "ampEnvelope",
-            ugen: "flock.ugen.asr",
-            rate: "audio",
-            start: 0.0,
-            sustain: 1.0,
-            attack: 0,
-            release: 0,
-            gate: 0
         }
+    }
+});
+
+fluid.defaults("flock.drum.ampEnvelope", {
+    gradeNames: "fluid.component",
+
+    ugenDef: {
+        id: "ampEnvelope",
+        ugen: "flock.ugen.asr",
+        rate: "audio",
+        start: 0.0,
+        sustain: 1.0,
+        attack: 0,
+        release: 0,
+        gate: 0
     }
 });

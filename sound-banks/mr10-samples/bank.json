@@ -4,11 +4,6 @@
         {
             "name": "Kick 1",
             "file": "audio/kick1.wav",
-            "midiKey": 35
-        },
-        {
-            "name": "Kick 2",
-            "file": "audio/kick2.wav",
             "midiKey": 36
         },
         {

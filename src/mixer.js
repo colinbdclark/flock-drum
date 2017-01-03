@@ -42,31 +42,53 @@ fluid.defaults("flock.drum.channelMixer", {
     },
 
     components: {
-        lowPassFilter: {
-            type: "flock.drum.lowPassFilter",
+        reverb: {
+            type: "flock.drum.reverb",
             options: {
                 ugenDef: {
-                    source: "{gain}.options.ugenDef"
+                    source: "{lowPassFilter}.options.ugenDef",
+                    mul: {
+                        id: "amp",
+                        ugen: "flock.ugen.value",
+                        rate: "control",
+                        value: 1.0
+                    }
                 }
             }
         },
 
-        gain: {
-            type: "flock.drum.gain",
+        lowPassFilter: {
+            type: "flock.drum.lowPassFilter",
             options: {
                 ugenDef: {
-                    source: {
-                        id: "mixer",
-                        ugen: "flock.ugen.sum",
-                        rate: "audio",
-                        sources: {
-                            expander: {
-                                funcName: "flock.drum.channelMixer.expandChannelSources",
-                                args: [
-                                    "{channelMixer}.options.channelSourceBuses",
-                                    "{channelMixer}.options.channelSourceTemplate"
-                                ]
-                            }
+                    source: "{distortion}.options.ugenDef"
+                }
+            }
+        },
+
+        distortion: {
+            type: "flock.drum.distortion",
+            options: {
+                ugenDef: {
+                    source: "{summer}.options.ugenDef"
+                }
+            }
+        },
+
+        summer: {
+            type: "fluid.component",
+            options: {
+                ugenDef: {
+                    id: "mixer",
+                    ugen: "flock.ugen.sum",
+                    rate: "audio",
+                    sources: {
+                        expander: {
+                            funcName: "flock.drum.channelMixer.expandChannelSources",
+                            args: [
+                                "{channelMixer}.options.channelSourceBuses",
+                                "{channelMixer}.options.channelSourceTemplate"
+                            ]
                         }
                     }
                 }
@@ -74,7 +96,7 @@ fluid.defaults("flock.drum.channelMixer", {
         }
     },
 
-    synthDef: "{that}.gain.options.ugenDef"
+    synthDef: "{reverb}.options.ugenDef"
 });
 
 flock.drum.channelMixer.expandChannelSources = function (channelSourceBuses, channelSourceTemplate) {

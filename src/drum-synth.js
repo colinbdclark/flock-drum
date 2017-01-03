@@ -31,18 +31,32 @@ fluid.defaults("flock.drum.synth", {
             options: {
                 ugenDef: {
                     bus: "{synth}.options.bus",
+                    mul: "{ampEnvelope}.options.ugenDef",
                     sources: {
                         id: "panner",
                         ugen: "flock.ugen.pan2",
                         pan: 0,
-                        source: "{reverb}.options.ugenDef"
+                        source: "{lowPassFilter}.options.ugenDef"
                     }
                 }
             }
         },
 
+        ampEnvelope: {
+            type: "flock.drum.ampEnvelope"
+        },
+
         lowPassFilter: {
             type: "flock.drum.lowPassFilter",
+            options: {
+                ugenDef: {
+                    source: "{distortion}.options.ugenDef"
+                }
+            }
+        },
+
+        distortion: {
+            type: "flock.drum.distortion",
             options: {
                 ugenDef: {
                     source: "{samplePlayer}.options.ugenDef"

@@ -64,8 +64,7 @@ var fluid = fluid || require("infusion"),
                 funcName: "flock.generateSequence",
                 args: [{
                     start: 0,
-                    end: 127,
-                    step: 1
+                    end: 127
                 }]
             }
         },
@@ -75,8 +74,7 @@ var fluid = fluid || require("infusion"),
                 funcName: "flock.generateSequence",
                 args: [{
                     start: 0,
-                    end: 127,
-                    step: 1
+                    end: 127
                 }]
             }
         },

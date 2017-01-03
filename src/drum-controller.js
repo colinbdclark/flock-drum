@@ -8,8 +8,7 @@ fluid.defaults("flock.drum.controller", {
             funcName: "flock.generateSequence",
             args: [{
                 start: 36,
-                numValues: 16,
-                step: 1
+                numValues: 16
             }]
         }
     },
