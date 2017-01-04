@@ -5,6 +5,10 @@ fluid.defaults("flock.drum.kit", {
 
     numVoices: 16,
 
+    members: {
+        voiceIndex: {}
+    },
+
     voiceBuses: {
         expander: {
             funcName: "flock.drum.kit.expandVoiceBuses",
@@ -32,6 +36,7 @@ fluid.defaults("flock.drum.kit", {
             sources: "{that}.options.voiceOptions",
             type: "flock.drum.synth",
             options: {
+                voiceName: "{sourcePath}",
                 addToEnvironment: "{sourcePath}",
                 bus: "{source}.bus",
                 bufferId: "{source}.bufferId",
@@ -39,16 +44,28 @@ fluid.defaults("flock.drum.kit", {
                     enviro: "{enviro}"
                 },
                 listeners: {
-                    onCreate: "{kit}.events.onVoiceCreated({that})"
+                    "onCreate.fireKitVoiceCreation": {
+                        funcName: "{kit}.events.onVoiceCreated.fire",
+                        args: ["{that}"]
+                    }
                 }
             }
         }
+    },
+
+    invokers: {
+        voiceForName: "flock.drum.kit.voiceForName({arguments}.0, {that})"
     },
 
     events: {
         onVoiceCreated: null
     }
 });
+
+flock.drum.kit.voiceForName = function (name, that) {
+    var voiceMemberName = that.voiceIndex[name];
+    return that[voiceMemberName];
+};
 
 flock.drum.kit.expandVoiceBuses = function (numVoices, enviro) {
     var left = [],

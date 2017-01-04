@@ -1,7 +1,13 @@
 "use strict";
 
 fluid.defaults("flock.drum.synth", {
-    gradeNames: ["flock.synth", "flock.drum.effectsChain"],
+    gradeNames: ["flock.synth", "flock.drum.effectsChain", "fluid.indexedDynamicComponent"],
+
+    dynamicIndexTarget: "{kit}",
+    // The path of the collection/member at which the index is to be held
+    dynamicIndexTargetPath: "voiceIndex",
+    // The path in this component at which the key is to be found
+    dynamicIndexKeyPath: "options.voiceName",
 
     bus: 0,
     bufferId: "0",

@@ -24,7 +24,7 @@ var fluid = fluid || require("infusion"),
             step = spec.step || 1,
             end = spec.end !== undefined ? spec.end : start + (spec.numValues * step);
 
-        for (var val = start, i = 0; val < end + 1; val += step, i++) {
+        for (var val = start, i = 0; val < end; val += step, i++) {
             arr[i] = val;
         }
 

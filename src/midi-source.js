@@ -25,15 +25,34 @@ fluid.defaults("flock.drum.midiSource", {
             type: "flock.drum.controller",
             options: {
                 numVoices: "{midiSource}.options.numVoices",
-
                 modelListeners: {
                     "notes.*": {
-                        "this": "console",
-                        method: "log",
-                        args: ["{change}.path", "{change}.value"]
+                        funcName: "flock.drum.midiSource.triggerVoice",
+                        args: [
+                            "{change}.path.1",
+                            "{change}.value",
+                            "{midiSource}.model.voiceMIDINotes",
+                            "{kit}"
+                        ]
                     }
                 }
             }
         }
     }
 });
+
+flock.drum.midiSource.triggerVoice = function (midiNoteNum, noteModel, voiceMIDINotes, kit) {
+    var voiceIdx = voiceMIDINotes.indexOf(Number(midiNoteNum));
+    if (voiceIdx < 0) {
+        return;
+    }
+
+    var voice = kit.voiceForName(voiceIdx),
+        // TODO: Would be nice for a smoother mapping between these two semantics.
+        voiceFn = noteModel.active ? voice.noteOn : voice.noteOff;
+
+    // TODO: Better indirection between velocity and the the synth?
+    voiceFn({
+        "ampEnvelope.sustain": noteModel.velocity
+    });
+};

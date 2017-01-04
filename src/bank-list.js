@@ -6,6 +6,7 @@ fluid.defaults("flock.drum.bankList", {
     banks: [
         "mr10-samples",
         "carbon-monoxide-music-drum-kit",
-        "fugwhump-analog-kit-lite"
+        "fugwhump-analog-kit-lite",
+        "sequential-circuits-drumtraks"
     ]
 });

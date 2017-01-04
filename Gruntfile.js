@@ -15,7 +15,8 @@ module.exports = function (grunt) {
             all: [
                 "src/**/*.js",
                 "tests/**/*js",
-                "!node_modules/**"
+                "!node_modules/**",
+                "!src/migrate/**/*.js"
             ]
         },
         jsonlint: {

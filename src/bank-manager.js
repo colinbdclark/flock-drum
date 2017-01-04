@@ -6,7 +6,7 @@ fluid.defaults("flock.drum.bankManager", {
     bankPathRootTemplate: "sound-banks/%activeBankID/",
 
     model: {
-        activeBankID: "{that}.bankList.options.banks.0",
+        activeBankID: "{that}.bankList.options.banks.3",
         activeBankPathRoot: "",
         activeBank: {}
     },

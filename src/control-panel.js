@@ -10,11 +10,9 @@ fluid.defaults("flock.drum.controlPanel", {
             container: "{controlPanel}.container",
             options: {
                 gateTimer: 0.25,
-
-                cat: "{arguments}.0", // TODO: Infusion will not allow me to refer to this
-                                      // at options.components.target
+                targetVoiceName: "{arguments}.0.options.voiceName",
                 components: {
-                    target: "{that}.options.cat"
+                    target: "@expand:{app}.kit.voiceForName({that}.options.targetVoiceName)"
                 }
             }
         }
@@ -22,5 +20,5 @@ fluid.defaults("flock.drum.controlPanel", {
 
     events: {
         onVoiceCreated: null
-    },
+    }
 });
