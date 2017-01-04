@@ -5,9 +5,6 @@ fluid.defaults("flock.drum.midiSource", {
 
     numVoices: 16,
 
-    // TODO: Somehow these midi note numbers
-    // need to get mapped into model listeners on {controller}
-    // which will fire the appropriate voice's noteOn/noteOff events.
     model: {
         voiceMIDINotes: {
             expander: {
