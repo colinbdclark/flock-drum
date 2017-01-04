@@ -83,7 +83,8 @@ flock.drum.kit.expandVoiceBuses = function (numVoices, enviro) {
 };
 
 flock.drum.kit.expandVoiceOptions = function (voiceBuses, voiceOptionsTemplate) {
-    // TODO: Hardcoded to the left channel only.
+    // We use left channel only here because the right channel will be filled in
+    // by the "expand" option to the output ugen.
     return fluid.transform(voiceBuses.left, function (voiceBus, idx) {
         var optionsForVoice = fluid.copy(voiceOptionsTemplate);
         optionsForVoice.bus = voiceBus;

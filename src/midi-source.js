@@ -49,10 +49,12 @@ flock.drum.midiSource.triggerVoice = function (midiNoteNum, noteModel, voiceMIDI
 
     var voice = kit.voiceForName(voiceIdx),
         // TODO: Would be nice for a smoother mapping between these two semantics.
-        voiceFn = noteModel.active ? voice.noteOn : voice.noteOff;
+        voiceFn = noteModel.active ? voice.noteOn : voice.noteOff,
+        velo = noteModel.velocity;
 
-    // TODO: Better indirection between velocity and the the synth?
+    // TODO: Better indirection between velocity and the synth via a model relay.
     voiceFn({
-        "ampEnvelope.sustain": noteModel.velocity
+        // TODO: Need to factor flock.ugen.midiAmp out into a function.
+        "ampEnvelope.sustain": velo > 0 ? velo / 127 : 0
     });
 };

@@ -5,7 +5,7 @@ fluid.defaults("flock.drum.app", {
 
     numChannels: 2,
     numInputBuses: 1,
-    numVoices: 6,
+    numVoices: 10,
 
     components: {
         enviro: {
