@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Minimal Flock Drum</title>
+
+        <script src="node_modules/flocking/dist/flocking-all.js"></script>
+        <script src="src/migrate/to-infusion/DynamicComponentIndexer.js"></script>
+
+        <script src="src/migrate/to-flocking/self-rendering-view.js"></script>
+        <script src="src/migrate/to-flocking/gate-button.js"></script>
+        <script src="src/migrate/to-flocking/note-gate-button.js"></script>
+        <script src="src/migrate/to-flocking/midi-device.js"></script>
+
+        <script src="src/ugen-defs.js"></script>
+        <script src="src/drum-synth.js"></script>
+        <script src="src/mixer.js"></script>
+        <script src="src/drum-kit.js"></script>
+        <script src="src/control-panel.js"></script>
+        <script src="src/bank-list.js"></script>
+        <script src="src/bank-manager.js"></script>
+        <script src="src/drum-controller.js"></script>
+        <script src="src/midi-source.js"></script>
+        <script src="src/app.js"></script>
+        <script src="src/web-app.js"></script>
+    </head>
+
+    <body id="body">
+        <main>
+            <div id="note-trigger-panel"></div>
+        </main>
+
+        <script type="text/javascript">
+            window.drumApp = flock.drum.web.app({
+                numVoices: 6
+            });
+        </script>
+    </body>
+</html>

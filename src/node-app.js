@@ -12,4 +12,4 @@ fluid.defaults("flock.drum.app.node", {
             }
         }
     }
-})
+});

@@ -1,5 +1,6 @@
 {
     "name": "flock-drum",
+    "main": "index-electron.js",
     "version": "0.0.1",
     "description": "A drum sample player",
     "author": "Colin Clark",
@@ -8,9 +9,16 @@
         "grunt": "1.0.1",
         "eslint-config-fluid": "1.0.0",
         "fluid-grunt-eslint": "18.1.2",
-        "grunt-jsonlint": "1.0.4"
+        "grunt-jsonlint": "1.0.4",
+        "infusion-electron": "colinbdclark/infusion-electron#5226fbd49cb4da50be519cd897f72869a2067413",
+        "electron": "1.4.14",
+        "electron-rebuild": "1.5.6"
     },
     "dependencies": {
         "flocking": "colinbdclark/flocking#unit-testing-improvements"
+    },
+    "scripts": {
+        "rebuild" : "node_modules/.bin/electron-rebuild",
+        "electron-app": "npm run rebuild && node_modules/.bin/electron ."
     }
 }
