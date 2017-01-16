@@ -1,6 +1,8 @@
 "use strict";
 
-fluid.defaults("flock.drum.triggerButton", {
+var flock = fluid.registerNamespace("flock");
+
+fluid.defaults("flock.drum.web.triggerButton", {
     gradeNames: "flock.ui.noteGateButton",
 
     gateTimer: 0.25,
@@ -19,13 +21,13 @@ fluid.defaults("flock.drum.triggerButton", {
     }
 });
 
-fluid.defaults("flock.drum.controlPanel", {
+fluid.defaults("flock.drum.web.controlPanel", {
     gradeNames: "fluid.viewComponent",
 
     dynamicComponents: {
         triggerButton: {
             createOnEvent: "onVoiceCreated",
-            type: "flock.drum.triggerButton",
+            type: "flock.drum.web.triggerButton",
             container: "{controlPanel}.container",
             options: {
                 targetVoiceName: "{arguments}.0.options.voiceName",

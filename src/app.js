@@ -1,5 +1,7 @@
 "use strict";
 
+var flock = fluid.registerNamespace("flock");
+
 fluid.defaults("flock.drum.app", {
     gradeNames: "fluid.component",
 
@@ -32,20 +34,8 @@ fluid.defaults("flock.drum.app", {
 
                 components: {
                     enviro: "{app}.enviro"
-                },
-
-                events: {
-                    // Any other arrangement of event distribution will fail silently.
-                    // Presumably, observing the {controlPanel} here ensures it is created in
-                    // time for the voices to be instantiated.
-                    onVoiceCreated: "{controlPanel}.events.onVoiceCreated"
                 }
             }
-        },
-
-        controlPanel: {
-            type: "flock.drum.controlPanel",
-            container: "#note-trigger-panel"
         },
 
         mixer: {

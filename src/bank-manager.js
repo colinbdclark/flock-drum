@@ -1,38 +1,39 @@
 "use strict";
 
+var flock = fluid.registerNamespace("flock"),
+    jQuery = fluid.registerNamespace("jQuery");
+
 fluid.defaults("flock.drum.bankManager", {
     gradeNames: "fluid.modelComponent",
 
     bankPathRootTemplate: "sound-banks/%activeBankID/",
 
     model: {
-        activeBankID: "{that}.bankList.options.banks.3",
+        activeBankID: "{that}.bankList.options.banks.0",
         activeBankPathRoot: "",
         activeBank: {}
     },
 
     modelRelay: [
         {
-            target: "activeBank",
-            singleTransform: {
-                type: "fluid.transforms.free",
-                func: "flock.drum.bankManager.loadBank",
-                args: ["{that}.model", "{that}.events"]
-            }
-        },
-        {
             target: "activeBankPathRoot",
             singleTransform: {
                 type: "fluid.transforms.stringTemplate",
                 template: "{that}.options.bankPathRootTemplate",
-                terms: "{that}.model"
+                terms: {
+                    activeBankID: "{that}.model.activeBankID"
+                }
             }
         }
     ],
 
     modelListeners: {
+        activeBankID: {
+            func: "flock.drum.bankManager.loadBank",
+            args: ["{that}.model", "{that}.events"]
+        },
+
         activeBank: {
-            excludeSource: "init",
             func: "{that}.events.onLoadBankBuffers.fire",
             args: ["{change}.value"]
         }
@@ -106,21 +107,48 @@ fluid.defaults("flock.drum.bankManager", {
     }
 });
 
-// TODO: Replace this with something suitable for use both in Electron and a browser.
 flock.drum.bankManager.loadBank = function (model, events) {
     if (!model || !model.activeBankPathRoot) {
-        return;
+        return {};
     }
 
     var path = model.activeBankPathRoot + "bank.json";
 
-    $.ajax({
+    flock.drum.bankManager.loadJSON({
         url: path,
-        method: "GET",
-        dataType: "json",
         success: events.afterBankMetadataLoaded.fire,
         error: function (jqXHR, textStatus, errorThrown) {
             events.onBankLoadError.fire(errorThrown);
+        }
+    });
+};
+
+flock.drum.bankManager.loadJSON = function (options) {
+    var strategy = (typeof jQuery !== undefined && jQuery.ajax) ?
+        flock.drum.bankManager.loadJSON.ajax : flock.drum.bankManager.loadJSON.require;
+
+    strategy(options);
+};
+
+flock.drum.bankManager.loadJSON.ajax = function (options) {
+    $.ajax({
+        url: options.url,
+        method: "GET",
+        dataType: "json",
+        success: options.success,
+        error: options.error
+    });
+};
+
+flock.drum.bankManager.loadJSON.require = function (options) {
+    // TODO: This asynchrony is required only because of a bug in the
+    // model relay for this component. Fix it!
+    process.nextTick(function () {
+        try {
+            var json = require(options.url);
+            options.success(json);
+        } catch (e) {
+            options.error(undefined, e.message, e);
         }
     });
 };

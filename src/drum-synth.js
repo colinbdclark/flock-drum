@@ -1,5 +1,7 @@
 "use strict";
 
+var flock = fluid.registerNamespace("flock");
+
 fluid.defaults("flock.drum.synth", {
     gradeNames: ["flock.synth", "flock.drum.effectsChain", "fluid.indexedDynamicComponent"],
 

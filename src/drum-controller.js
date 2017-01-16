@@ -1,5 +1,7 @@
 "use strict";
 
+var flock = fluid.registerNamespace("flock");
+
 fluid.defaults("flock.drum.controller", {
     gradeNames: "flock.midi.device",
 
