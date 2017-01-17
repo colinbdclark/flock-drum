@@ -9,8 +9,33 @@ fluid.defaults("flock.drum.out", {
         id: "voiceOutput",
         ugen: "flock.ugen.out",
         rate: "audio",
-        bus: 0,
+        bus: 0
+    }
+});
+
+fluid.defaults("flock.drum.monoOut", {
+    gradeNames: "flock.drum.out",
+
+    ugenDef: {
+        expand: 1
+    }
+});
+
+fluid.defaults("flock.drum.stereoOut", {
+    gradeNames: "flock.drum.out",
+
+    ugenDef: {
         expand: 2
+    }
+});
+
+fluid.defaults("flock.drum.panner", {
+    gradeNames: "fluid.component",
+
+    ugenDef: {
+        id: "panner",
+        ugen: "flock.ugen.pan2",
+        pan: 0
     }
 });
 
@@ -92,3 +117,31 @@ fluid.defaults("flock.drum.ampEnvelope", {
         gate: 0
     }
 });
+
+fluid.defaults("flock.drum.channelSum", {
+    gradeNames: "fluid.component",
+
+    ugenDef: {
+        id: "mixer",
+        ugen: "flock.ugen.sum",
+        rate: "audio",
+        sources: {
+            expander: {
+                funcName: "flock.drum.channelSum.expandSources",
+                args: [
+                    "{channelMixer}.options.channelSourceBuses",
+                    "{channelMixer}.options.channelSourceTemplate"
+                ]
+            }
+        }
+    }
+});
+
+flock.drum.channelSum.expandSources = function (channelSourceBuses, channelSourceTemplate) {
+    return fluid.transform(channelSourceBuses, function (bus) {
+        var channelSource = fluid.copy(channelSourceTemplate);
+        channelSource.bus = bus;
+
+        return channelSource;
+    });
+};

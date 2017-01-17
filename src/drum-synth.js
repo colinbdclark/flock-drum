@@ -35,17 +35,11 @@ fluid.defaults("flock.drum.synth", {
 
     components: {
         output: {
-            type: "flock.drum.out",
+            type: "fluid.mustBeOverridden",
             options: {
                 ugenDef: {
                     bus: "{synth}.options.bus",
-                    mul: "{ampEnvelope}.options.ugenDef",
-                    sources: {
-                        id: "panner",
-                        ugen: "flock.ugen.pan2",
-                        pan: 0,
-                        source: "{lowPassFilter}.options.ugenDef"
-                    }
+                    mul: "{ampEnvelope}.options.ugenDef"
                 }
             }
         },
@@ -86,3 +80,42 @@ fluid.defaults("flock.drum.synth", {
 
     synthDef: "{output}.options.ugenDef"
 });
+
+fluid.defaults("flock.drum.monoSynth", {
+    gradeNames: "flock.drum.synth",
+
+    components: {
+        output: {
+            type: "flock.drum.monoOut",
+            options: {
+                ugenDef: {
+                    sources: "{lowPassFilter}.options.ugenDef"
+                }
+            }
+        }
+    }
+});
+
+fluid.defaults("flock.drum.stereoSynth", {
+    gradeNames: "flock.drum.synth",
+
+    components: {
+        output: {
+            type: "flock.drum.stereoOut",
+            options: {
+                ugenDef: {
+                    sources: "{panner}.options.ugenDef"
+                }
+            }
+        },
+
+        panner: {
+            type: "flock.drum.panner",
+            options: {
+                ugenDef: {
+                    source: "{lowPassFilter}.options.ugenDef"
+                }
+            }
+        }
+    }
+})

@@ -4,7 +4,8 @@ var fluid = require("infusion"),
     flock = require("flocking");
 
 require("./src/require-components.js")
+require("./minimal-app.js");
 
 var drumApp = flock.drum.app.node({
-    numVoices: 6
+    gradeNames: ["flock.drum.app.minimal"]
 });

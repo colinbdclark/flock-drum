@@ -39,7 +39,7 @@ fluid.defaults("flock.drum.app", {
         },
 
         mixer: {
-            type: "flock.drum.mixer"
+            type: "flock.drum.stereoMixer"
         },
 
         bankManager: {

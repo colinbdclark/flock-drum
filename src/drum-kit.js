@@ -2,6 +2,9 @@
 
 var flock = fluid.registerNamespace("flock");
 
+// TODO: Make this more easily configurable for mono vs. stereo.
+// Right now, we still acquire twice as many buses as we need if we're
+// in mono, simply because of the hardcoding in flock.drum.kit.expandVoiceBuses.
 fluid.defaults("flock.drum.kit", {
     gradeNames: "flock.band",
 
@@ -36,7 +39,7 @@ fluid.defaults("flock.drum.kit", {
     dynamicComponents: {
         voice: {
             sources: "{that}.options.voiceOptions",
-            type: "flock.drum.synth",
+            type: "flock.drum.stereoSynth",
             options: {
                 voiceName: "{sourcePath}",
                 addToEnvironment: "{sourcePath}",

@@ -2,7 +2,7 @@
 
 var flock = fluid.registerNamespace("flock");
 
-fluid.defaults("flock.drum.mixer", {
+fluid.defaults("flock.drum.stereoMixer", {
     gradeNames: "flock.band",
 
     components: {
@@ -19,7 +19,7 @@ fluid.defaults("flock.drum.mixer", {
             options: {
                 addToEnvironment: {
                     expander: {
-                        funcName: "flock.drum.mixer.rightMixerNodePosition",
+                        funcName: "flock.drum.stereoMixer.rightMixerNodePosition",
                         args: ["{kit}.options.numVoices"]
                     }
                 },
@@ -29,7 +29,7 @@ fluid.defaults("flock.drum.mixer", {
     }
 });
 
-flock.drum.mixer.rightMixerNodePosition = function (numVoices) {
+flock.drum.stereoMixer.rightMixerNodePosition = function (numVoices) {
     return numVoices + 1;
 };
 
@@ -78,34 +78,9 @@ fluid.defaults("flock.drum.channelMixer", {
         },
 
         summer: {
-            type: "fluid.component",
-            options: {
-                ugenDef: {
-                    id: "mixer",
-                    ugen: "flock.ugen.sum",
-                    rate: "audio",
-                    sources: {
-                        expander: {
-                            funcName: "flock.drum.channelMixer.expandChannelSources",
-                            args: [
-                                "{channelMixer}.options.channelSourceBuses",
-                                "{channelMixer}.options.channelSourceTemplate"
-                            ]
-                        }
-                    }
-                }
-            }
+            type: "flock.drum.channelSum"
         }
     },
 
     synthDef: "{reverb}.options.ugenDef"
 });
-
-flock.drum.channelMixer.expandChannelSources = function (channelSourceBuses, channelSourceTemplate) {
-    return fluid.transform(channelSourceBuses, function (bus) {
-        var channelSource = fluid.copy(channelSourceTemplate);
-        channelSource.bus = bus;
-
-        return channelSource;
-    });
-};

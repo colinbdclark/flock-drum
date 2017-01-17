@@ -22,6 +22,7 @@
         <script src="src/drum-controller.js"></script>
         <script src="src/midi-source.js"></script>
         <script src="src/app.js"></script>
+        <script src="src/minimal-app.js"></script>
         <script src="src/web-app.js"></script>
     </head>
 
@@ -32,7 +33,7 @@
 
         <script type="text/javascript">
             window.drumApp = flock.drum.web.app({
-                numVoices: 6
+                gradeNames: ["flock.drum.app.minimal"]
             });
         </script>
     </body>
