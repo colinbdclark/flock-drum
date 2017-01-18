@@ -17,6 +17,7 @@ fluid.defaults("flock.drum.app", {
                     audioSystem: {
                         options: {
                             model: {
+                                bufferSize: 1024,
                                 chans: "{app}.options.numChannels",
                                 numInputBuses:  "{app}.options.numInputBuses",
                                 numBuses: "@expand:flock.drum.app.calcNumBuses({app}.options)"
