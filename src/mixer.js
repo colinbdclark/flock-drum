@@ -51,9 +51,9 @@ fluid.defaults("flock.drum.channelMixer", {
                     source: "{lowPassFilter}.options.ugenDef",
                     mul: {
                         id: "amp",
-                        ugen: "flock.ugen.value",
+                        ugen: "flock.ugen.midiAmp",
                         rate: "control",
-                        value: 1.0
+                        velocity: 127
                     }
                 }
             }

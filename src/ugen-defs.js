@@ -46,9 +46,18 @@ fluid.defaults("flock.drum.reverb", {
         id: "reverb",
         ugen: "flock.ugen.freeverb",
         rate: "audio",
-        mix: 0.0,
-        room: 0.5,
-        damp: 0.5
+        mix: {
+            ugen: "flock.ugen.midiAmp",
+            velocity: 0
+        },
+        room: {
+            ugen: "flock.ugen.midiAmp",
+            velocity: 64
+        },
+        damp: {
+            ugen: "flock.ugen.midiAmp",
+            velocity: 64
+        }
     }
 });
 
@@ -57,9 +66,14 @@ fluid.defaults("flock.drum.distortion", {
 
     ugenDef: {
         id: "distortion",
-        ugen: "flock.ugen.distortion",
+        ugen: "flock.ugen.distortion.deJonge",
         rate: "audio",
-        gain: 1.0
+        amount: {
+            ugen: "flock.ugen.math",
+            rate: "control",
+            source: 2,
+            div: 2
+        }
     }
 });
 
@@ -70,8 +84,19 @@ fluid.defaults("flock.drum.lowPassFilter", {
         id: "lowPassFilter",
         ugen: "flock.ugen.filter.moog",
         rate: "audio",
-        cutoff: 44100,
-        resonance: 0
+        cutoff: {
+            ugen: "flock.ugen.value",
+            rate: "audio",
+            value: 127,
+            mul: 44100 / 127,
+            add: 60
+        },
+        resonance: {
+            ugen: "flock.ugen.math",
+            rate: "control",
+            div: 16,
+            source: 0
+        }
     }
 });
 
@@ -113,7 +138,7 @@ fluid.defaults("flock.drum.ampEnvelope", {
         start: 0.0,
         sustain: 1.0,
         attack: 0,
-        release: 0,
+        release: 0.25,
         gate: 0
     }
 });

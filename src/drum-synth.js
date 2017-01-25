@@ -96,6 +96,21 @@ fluid.defaults("flock.drum.monoSynth", {
     }
 });
 
+fluid.defaults("flock.drum.minimalMonoSynth", {
+        gradeNames: "flock.drum.monoSynth",
+
+        components: {
+            output: {
+                options: {
+                    ugenDef: {
+                        sources: "{samplePlayer}.options.ugenDef"
+                    }
+                }
+            }
+        }
+
+});
+
 fluid.defaults("flock.drum.stereoSynth", {
     gradeNames: "flock.drum.synth",
 

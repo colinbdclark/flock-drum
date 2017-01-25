@@ -10,7 +10,7 @@ fluid.defaults("flock.drum.app.minimal", {
             options: {
                 dynamicComponents: {
                     voice: {
-                        type: "flock.drum.monoSynth",
+                        type: "flock.drum.minimalMonoSynth",
                     }
                 }
             }

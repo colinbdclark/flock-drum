@@ -12,9 +12,14 @@
             "midiKey": 38
         },
         {
-            "name": "Brush",
-            "file": "audio/brush.wav",
-            "midiKey": 40
+            "name": "Closed Hi Hat",
+            "file": "audio/chihat.wav",
+            "midiKey": 42
+        },
+        {
+            "name": "Cymbal",
+            "file": "audio/cymbal.wav",
+            "midiKey": 51
         },
         {
             "name": "Low Tom",
@@ -22,24 +27,19 @@
             "midiKey": 41
         },
         {
-            "name": "Closed Hi Hat",
-            "file": "audio/chihat.wav",
-            "midiKey": 42
-        },
-        {
-            "name": "Mid Tom",
-            "file": "audio/midtom.wav",
-            "midiKey": 43
-        },
-        {
             "name": "High Tom",
             "file": "audio/hitom.wav",
             "midiKey": 50
         },
         {
-            "name": "Cymbal",
-            "file": "audio/cymbal.wav",
-            "midiKey": 51
+            "name": "Brush",
+            "file": "audio/brush.wav",
+            "midiKey": 40
+        },
+        {
+            "name": "Mid Tom",
+            "file": "audio/midtom.wav",
+            "midiKey": 43
         },
         {
             "name": "Open Hi Hat",

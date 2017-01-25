@@ -20,6 +20,16 @@ fluid.defaults("flock.drum.midiSource", {
                     numValues: "{that}.options.numVoices"
                 }]
             }
+        },
+
+        masterControlMap: {
+            10: "amp.velocity",
+            74: "distortion.amount.source",
+            71: "lowPassFilter.cutoff.value",
+            76: "lowPassFilter.resonance.source",
+            77: "reverb.mix.velocity",
+            93: "reverb.room.velocity",
+            73: "reverb.damp.velocity"
         }
     },
 
@@ -44,6 +54,15 @@ fluid.defaults("flock.drum.midiSource", {
                         args: [
                             "{arguments}.0",
                             "{midiSource}"
+                        ]
+                    },
+
+                    "control.updateMaster": {
+                        funcName: "flock.drum.midiSource.updateMasterControl",
+                        args: [
+                            "{arguments}.0",
+                            "{midiSource}",
+                            "{mixer}"
                         ]
                     }
                 }
@@ -75,4 +94,13 @@ flock.drum.midiSource.triggerVoice = function (noteSpec, that) {
         // TODO: Need to factor flock.ugen.midiAmp out into a function.
         "ampEnvelope.sustain": noteSpec.velocity / 127
     });
+};
+
+flock.drum.midiSource.updateMasterControl = function (controlSpec, that, mixer) {
+    var path = that.model.masterControlMap[controlSpec.number];
+    if (!path) {
+        return;
+    }
+
+    mixer.set(path, controlSpec.value);
 };
