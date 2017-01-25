@@ -16,7 +16,6 @@ require("./drum-kit.js");
 require("./control-panel.js");
 require("./bank-list.js");
 require("./bank-manager.js");
-require("./drum-controller.js");
 require("./midi-source.js");
 require("./app.js");
 require("./node-app.js");

@@ -7,6 +7,10 @@ fluid.defaults("flock.drum.midiSource", {
 
     numVoices: 16,
 
+    members: {
+        midiVoiceCache: []
+    },
+
     model: {
         voiceMIDINotes: {
             expander: {
@@ -19,19 +23,27 @@ fluid.defaults("flock.drum.midiSource", {
         }
     },
 
+    modelListeners: {
+        voiceMIDINotes: {
+            funcName: "flock.drum.midiSource.cacheVoices",
+            args: ["{kit}", "{that}", "{change}.value"]
+        }
+    },
+
     components: {
-        controller: {
-            type: "flock.drum.controller",
+        connection: {
+            type: "flock.midi.connection",
             options: {
-                numVoices: "{midiSource}.options.numVoices",
-                modelListeners: {
-                    "notes.*": {
+                ports: {
+                    input: "*"
+                },
+                openImmediately: true,
+                listeners: {
+                    "note.triggerVoice": {
                         funcName: "flock.drum.midiSource.triggerVoice",
                         args: [
-                            "{change}.path.1",
-                            "{change}.value",
-                            "{midiSource}.model.voiceMIDINotes",
-                            "{kit}"
+                            "{arguments}.0",
+                            "{midiSource}"
                         ]
                     }
                 }
@@ -40,20 +52,27 @@ fluid.defaults("flock.drum.midiSource", {
     }
 });
 
-flock.drum.midiSource.triggerVoice = function (midiNoteNum, noteModel, voiceMIDINotes, kit) {
-    var voiceIdx = voiceMIDINotes.indexOf(Number(midiNoteNum));
-    if (voiceIdx < 0) {
+flock.drum.midiSource.cacheVoices = function (kit, that, voiceMIDINotes) {
+    that.midiVoiceCache = Array(127);
+
+    fluid.each(kit.voiceIndex, function (voiceID, voiceName) {
+        var voice = kit[voiceID],
+            idx = Number(voiceName),
+            midiNote = voiceMIDINotes[idx];
+
+        that.midiVoiceCache[midiNote] = voice;
+    });
+};
+
+flock.drum.midiSource.triggerVoice = function (noteSpec, that) {
+    var voice = that.midiVoiceCache[noteSpec.note];
+
+    if (!voice) {
         return;
     }
 
-    var voice = kit.voiceForName(voiceIdx),
-        // TODO: Would be nice for a smoother mapping between these two semantics.
-        voiceFn = noteModel.active ? voice.noteOn : voice.noteOff,
-        velo = noteModel.velocity;
-
-    // TODO: Better indirection between velocity and the synth via a model relay.
-    voiceFn({
+    voice[noteSpec.type]({
         // TODO: Need to factor flock.ugen.midiAmp out into a function.
-        "ampEnvelope.sustain": velo > 0 ? velo / 127 : 0
+        "ampEnvelope.sustain": noteSpec.velocity / 127
     });
 };
